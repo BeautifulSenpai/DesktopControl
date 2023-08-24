@@ -4,27 +4,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="Родительский контроль"
+        WindowStartupLocation="CenterScreen"
         Height="450" Width="800"
         WindowStyle="None"
         Background="Transparent"
         AllowsTransparency="True"
         StateChanged="Window_StateChanged" Closing="Window_Closing"
+        MouseDown="Window_MouseDown"
         >
-    <Border Background="#222222" CornerRadius="10">
-        <Grid>
+    <Grid Background="#efcead">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal" Margin="10">
+            <Button Style="{StaticResource MaterialDesignIconButton}" Click="MinimizeBtn">
+                <materialDesign:PackIcon Kind="WindowMinimize" />
+            </Button>
+            <Button Style="{StaticResource MaterialDesignIconButton}" Click="CloseBtn">
+                <materialDesign:PackIcon Kind="Close" />
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal" Margin="10">
+            <TextBlock Text="UID:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox Width="150" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="10">
+            <materialDesign:PackIcon Kind="SmartphoneLinkOff" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBlock Text="Устройство не сопряжено" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="textBlock"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               FontSize="40"
-               Foreground="White"
-               />
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           FontSize="40"
+           Foreground="White"/>
             <StackPanel x:Name="answerStackPanel"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        Orientation="Horizontal"
-                        Margin="10"/>
-        </Grid>
-    </Border>
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal"
+            Margin="10"/>
+        </StackPanel>
+
+    </Grid>
 </Window>

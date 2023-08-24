@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Threading;
 using WpfApp1.Classes;
+using WpfApp1.Pages;
 
 namespace WpfApp1
 {
@@ -23,15 +24,24 @@ namespace WpfApp1
         {
             InitializeComponent();
             Initialize();
+            Closing += Window_Closing;
         }
 
         private void Initialize()
         {
+            
+            ShowSplashScreen();
             ConnectToServer(true);
             InitializeSocket();
             questionnaire = new Questionnaire();
             InitializeTaskbarIcon();
             HideToTray();
+        }
+
+        private void ShowSplashScreen()
+        {
+            Pages.SplashScreen splashScreen = new Pages.SplashScreen();
+            splashScreen.ShowDialog();
         }
 
         private void InitializeTaskbarIcon()
@@ -49,11 +59,13 @@ namespace WpfApp1
             this.WindowState = WindowState.Normal;
             this.Show();
             this.Activate();
+            taskbarIcon.Visibility = Visibility.Collapsed;
         }
 
         private void HideToTray()
         {
             this.Hide();
+            taskbarIcon.Visibility = Visibility.Visible;
         }
 
         private void ShowQuestion(int index)
@@ -229,11 +241,31 @@ namespace WpfApp1
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (timer != null && timer.IsEnabled)
+            e.Cancel = true;
+
+            HideToTray();
+        }
+
+        private void Window_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            try
             {
-                e.Cancel = true;
-                MessageBox.Show("Пожалуйста, дождитесь завершения таймера.");
+                DragMove();
             }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void MinimizeBtn(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void CloseBtn(object sender, RoutedEventArgs e)
+        {
+            Close();
+
         }
     }
 }
