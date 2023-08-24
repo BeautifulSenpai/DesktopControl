@@ -160,6 +160,7 @@ namespace WpfApp1
                     StartTimer(timeInSeconds);
                 });
             });
+
             socket.ConnectAsync();
         }
 
@@ -184,6 +185,8 @@ namespace WpfApp1
                     this.Activate();
                     timer.Stop();
                     UpdateTextBlock("Время вышло!");
+
+                    socket.EmitAsync("timer-finished");
 
                     currentQuestionIndex = 0;
                     correctAnswers = 0;
